@@ -31,7 +31,7 @@ public class CustomerPortfolioController {
     public Mono<StockTradeResponse> trade(@PathVariable Integer customerId, @RequestBody Mono<TradeRequest> requestMono) {
 
         return requestMono.transform(RequestValidator.validate())
-                .doOnNext(r -> logger.info("CustomerServiceClient::trade {}:: request:{}", customerId, r))
+//                .doOnNext(r -> logger.info("CustomerServiceClient::trade {}:: request:{}", customerId, r))
                 .flatMap(req -> this.customerPortfolioService.trade(customerId, req));
 
     }

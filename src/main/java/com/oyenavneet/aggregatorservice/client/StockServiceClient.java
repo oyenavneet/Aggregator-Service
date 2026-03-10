@@ -28,7 +28,7 @@ public class StockServiceClient {
 
     public Mono<StockPriceResponse> getStockPrice(Ticker ticker) {
         return this.webClient.get()
-                .uri("/stock/{}", ticker)
+                .uri("/stock/{ticker}", ticker)
                 .retrieve()
                 .bodyToMono(StockPriceResponse.class);
     }
