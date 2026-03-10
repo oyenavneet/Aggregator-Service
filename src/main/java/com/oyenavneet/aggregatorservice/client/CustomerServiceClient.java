@@ -33,10 +33,11 @@ public class CustomerServiceClient {
     }
 
 
-    public Mono<StockTradeResponse> trade(Integer customerId, StockTradeRequest stockTradeRequest) {
+    public Mono<StockTradeResponse> trade(Integer customerId, StockTradeRequest request) {
+        logger.info("CustomerServiceClient::trade {}", customerId);
         return this.webClient.post()
                 .uri("/customers/{customerId}/trade", customerId)
-                .bodyValue(stockTradeRequest)
+                .bodyValue(request)
                 .retrieve()
                 .bodyToMono(StockTradeResponse.class)
                 .onErrorResume(NotFound.class, ex -> ApplicationExceptions.customerNotFound(customerId))

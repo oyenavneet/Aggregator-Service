@@ -3,11 +3,14 @@ package com.oyenavneet.aggregatorservice.service;
 import com.oyenavneet.aggregatorservice.client.CustomerServiceClient;
 import com.oyenavneet.aggregatorservice.client.StockServiceClient;
 import com.oyenavneet.aggregatorservice.dto.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 @Service
 public class CustomerPortfolioService {
+    private static final Logger logger = LoggerFactory.getLogger(CustomerPortfolioService.class);
 
     private final StockServiceClient stockServiceClient;
     private final CustomerServiceClient customerServiceClient;
@@ -24,6 +27,7 @@ public class CustomerPortfolioService {
 
 
     public Mono<StockTradeResponse> trade(Integer customerId, TradeRequest tradeRequest) {
+        logger.info("CustomerPortfolioService: trade called");
         return this.stockServiceClient.getStockPrice(tradeRequest.ticker())
                 .map(StockPriceResponse::price)
                 .map(price -> this.toStockTradeRequest(tradeRequest, price))
